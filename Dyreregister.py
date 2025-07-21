@@ -9,11 +9,13 @@ SHEET_URL = "https://docs.google.com/spreadsheets/d/1TqBD5etiHRWYsgnKz1O-ZkKn6Ko
 SHEET_NAME = "Ark1"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
-credentials = Credentials.from_service_account_file(
-    "gcp_secret.json", scopes=SCOPES
+# ✅ Brug secrets i stedet for lokal fil
+credentials = Credentials.from_service_account_info(
+    st.secrets["gcp_secret_json"], scopes=SCOPES
 )
 client = gspread.authorize(credentials)
 worksheet = client.open_by_url(SHEET_URL).worksheet(SHEET_NAME)
+
 
 # Funktion: Gem DataFrame til Google Sheets
 def gem_til_google_sheets(df):
